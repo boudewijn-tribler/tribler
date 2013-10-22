@@ -127,7 +127,8 @@ class TriblerLaunchMany(Thread):
                 # However, for now we must start self.dispersy.callback before running
                 # try_register(nocachedb, self.database_thread)!
 
-                self.dispersy.start()
+                if not self.dispersy.start():
+                    print >> sys.stderr, "lmc: Not all Dispersy components were started successfully"
 
                 print >> sys.stderr, "lmc: Dispersy is listening on port", self.dispersy.wan_address[1], "using", endpoint
                 self.upnp_ports.append((self.dispersy.wan_address[1], 'UDP'))
