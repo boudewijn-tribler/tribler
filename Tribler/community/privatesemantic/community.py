@@ -300,8 +300,15 @@ class ForwardCommunity():
 
     class MSimilarityRequest(NumberCache):
         @staticmethod
-        def create_identifier(number, force_number=-1):
-            return u"request-cache:m-similarity-request:%d" % (force_number if force_number >= 0 else number,)
+        def create_identifier(number, *args):
+            return u"request-cache:m-similarity-request:%d" % (number,)
+
+        @staticmethod
+        def create_number(force_number=-1):
+            if force_number >= 0:
+                return force_number
+            else:
+                return super(ForwardCommunity.MSimilarityRequest, self).create_number()
 
         def __init__(self, community, message, requested_candidates, force_number=-1):
             NumberCache.__init__(self, community.request_cache, force_number)
